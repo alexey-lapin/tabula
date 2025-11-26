@@ -1,3 +1,9 @@
+---
+const {
+	title = 'Home',
+	description = 'Curated launchpad of links',
+} = Astro.props;
+---
 <!doctype html>
 <html lang="en">
 	<head>
@@ -5,18 +11,87 @@
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
+		<title>{title}</title>
+		<meta name="description" content={description} />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=Chivo:wght@500&display=swap"
+			rel="stylesheet"
+		/>
 	</head>
 	<body>
-		<slot />
+		<div class="page">
+			<slot />
+		</div>
 	</body>
 </html>
 
 <style>
-	html,
+	:root {
+		color-scheme: light;
+		--bg: #0b1220;
+		--text: #e6ecff;
+		--muted: #9fb2d8;
+		--panel: rgba(255, 255, 255, 0.04);
+		--border: rgba(255, 255, 255, 0.1);
+	}
+
+	* {
+		box-sizing: border-box;
+	}
+
 	body {
 		margin: 0;
-		width: 100%;
-		height: 100%;
+		min-height: 100vh;
+		background:
+			radial-gradient(circle at 12% 18%, rgba(97, 120, 255, 0.32), transparent 32%),
+			radial-gradient(circle at 82% 16%, rgba(255, 138, 92, 0.22), transparent 28%),
+			radial-gradient(circle at 10% 70%, rgba(111, 225, 193, 0.18), transparent 32%),
+			var(--bg);
+		color: var(--text);
+		font-family: 'Space Grotesk', 'Chivo', 'Segoe UI', system-ui, -apple-system, sans-serif;
+		-webkit-font-smoothing: antialiased;
+	}
+
+	.page {
+		min-height: 100vh;
+		padding: 48px 20px 64px;
+		position: relative;
+		isolation: isolate;
+	}
+
+	.page::before {
+		content: '';
+		position: absolute;
+		inset: 12% auto auto 8%;
+		width: 180px;
+		height: 180px;
+		filter: blur(70px);
+		opacity: 0.35;
+		background: linear-gradient(140deg, #7cc9ff, #a18bff);
+		z-index: -1;
+	}
+
+	.page::after {
+		content: '';
+		position: absolute;
+		inset: auto 12% 10% auto;
+		width: 200px;
+		height: 200px;
+		filter: blur(80px);
+		opacity: 0.28;
+		background: linear-gradient(200deg, #ffae70, #ff6682);
+		z-index: -1;
+	}
+
+	a {
+		color: inherit;
+	}
+
+	@media (min-width: 900px) {
+		.page {
+			padding: 72px 64px 96px;
+		}
 	}
 </style>
