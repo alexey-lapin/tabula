@@ -6,10 +6,9 @@ const hero = linkData?.hero ?? {};
 const categories = linkData?.categories ?? [];
 ---
 
-<Layout title={`${hero.title ?? 'Launchpad'} | Home`} description={hero.description}>
+<Layout title={`${hero.title ?? 'Home'} | Home`} description={hero.description}>
 	<main class="shell">
 		<section class="intro">
-			<p class="pill">{hero.kicker ?? 'Link collection'}</p>
 			<h1>{hero.title ?? 'Personal link launchpad'}</h1>
 			{hero.description && <p class="lede">{hero.description}</p>}
 		</section>
@@ -65,20 +64,6 @@ const categories = linkData?.categories ?? [];
 		display: grid;
 		gap: 10px;
 		max-width: 720px;
-	}
-
-	.pill {
-		display: inline-flex;
-		align-items: center;
-		gap: 8px;
-		padding: 6px 10px;
-		border-radius: 999px;
-		background: rgba(255, 255, 255, 0.08);
-		border: 1px solid rgba(255, 255, 255, 0.12);
-		color: var(--muted);
-		font-size: 12px;
-		letter-spacing: 0.08em;
-		text-transform: uppercase;
 	}
 
 	h1 {
