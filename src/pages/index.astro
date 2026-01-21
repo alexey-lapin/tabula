@@ -18,7 +18,7 @@ const categories = linkData?.categories ?? [];
 		) : (
 			<section class="grid" aria-label="Link categories">
 				{categories.map((category) => (
-					<article class="card" aria-label={category.name}>
+					<article class="card" aria-label={category.name} style={`--card-width: ${category.cardWidth ?? 4}`}>
 						<header class="card__header">
 							<span class="dot" style={`--dot:${category.accent ?? '#7cc9ff'}`}></span>
 							<div>
@@ -81,23 +81,24 @@ const categories = linkData?.categories ?? [];
 
 	.grid {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+		grid-template-columns: repeat(12, 1fr);
 		gap: 18px;
 	}
 
 	.card {
+		grid-column: span var(--card-width, 4);
 		background: var(--panel);
 		border: 1px solid var(--border);
 		border-radius: 18px;
 		padding: 18px 18px 14px;
-		box-shadow: 0 18px 50px rgba(0, 0, 0, 0.28);
+		box-shadow: var(--shadow);
 		backdrop-filter: blur(12px);
 		transition: border-color 0.2s ease, transform 0.2s ease;
 	}
 
 	.card:hover {
 		transform: translateY(-2px);
-		border-color: rgba(255, 255, 255, 0.22);
+		border-color: var(--muted);
 	}
 
 	.card__header {
@@ -160,7 +161,7 @@ const categories = linkData?.categories ?? [];
 	}
 
 	.links a:hover {
-		color: #f4f7ff;
+		color: var(--text-hover);
 		transform: translateX(2px);
 	}
 
@@ -196,6 +197,7 @@ const categories = linkData?.categories ?? [];
 
 		.card {
 			padding: 16px;
+			grid-column: span 12;
 		}
 	}
 </style>

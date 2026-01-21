@@ -13,22 +13,73 @@ const {
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 		<meta name="description" content={description} />
+		<script is:inline>
+			const theme = (() => {
+				if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+					return localStorage.getItem('theme');
+				}
+				if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+					return 'dark';
+				}
+				return 'light';
+			})();
+		
+			if (theme === 'light') {
+				document.documentElement.classList.remove('dark');
+				document.documentElement.setAttribute('data-theme', 'light');
+			} else {
+				document.documentElement.classList.add('dark');
+				document.documentElement.setAttribute('data-theme', 'dark');
+			}
+			window.localStorage.setItem('theme', theme);
+		</script>
 	</head>
 	<body>
 		<div class="page">
+			<button id="theme-toggle" aria-label="Toggle theme">
+				<svg class="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+				<svg class="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+			</button>
 			<slot />
 		</div>
+
+		<script>
+			const handleToggleClick = () => {
+				const element = document.documentElement;
+				element.classList.toggle("dark");
+		
+				const isDark = element.classList.contains("dark");
+				const theme = isDark ? "dark" : "light";
+				element.setAttribute("data-theme", theme);
+				localStorage.setItem("theme", theme);
+			};
+		
+			document.getElementById("theme-toggle")?.addEventListener("click", handleToggleClick);
+		</script>
 	</body>
 </html>
 
 <style>
 	:root {
 		color-scheme: light;
+		--bg: #f8fafc;
+		--text: #1e293b;
+		--muted: #64748b;
+		--panel: rgba(255, 255, 255, 0.7);
+		--border: rgba(0, 0, 0, 0.08);
+		--text-hover: #0f172a;
+		--shadow: 0 18px 50px rgba(0, 0, 0, 0.12);
+	}
+
+	[data-theme="dark"] {
+		color-scheme: dark;
 		--bg: #0b1220;
 		--text: #e6ecff;
 		--muted: #9fb2d8;
 		--panel: rgba(255, 255, 255, 0.04);
 		--border: rgba(255, 255, 255, 0.1);
+		--text-hover: #ffffff;
+		--shadow: 0 18px 50px rgba(0, 0, 0, 0.28);
 	}
 
 	* {
@@ -43,9 +94,11 @@ const {
 			radial-gradient(circle at 82% 16%, rgba(255, 138, 92, 0.22), transparent 28%),
 			radial-gradient(circle at 10% 70%, rgba(111, 225, 193, 0.18), transparent 32%),
 			var(--bg);
+		background-attachment: fixed;
 		color: var(--text);
 		font-family: system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
 		-webkit-font-smoothing: antialiased;
+		transition: background-color 0.3s ease, color 0.3s ease;
 	}
 
 	.page {
@@ -79,6 +132,35 @@ const {
 		z-index: -1;
 	}
 
+	#theme-toggle {
+		position: absolute;
+		top: 24px;
+		right: 24px;
+		background: var(--panel);
+		border: 1px solid var(--border);
+		color: var(--text);
+		cursor: pointer;
+		padding: 8px;
+		border-radius: 50%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		transition: all 0.2s ease;
+		backdrop-filter: blur(12px);
+		z-index: 10;
+	}
+
+	#theme-toggle:hover {
+		transform: scale(1.1);
+		border-color: var(--muted);
+	}
+
+	.sun { display: none; }
+	.moon { display: block; }
+
+	:global([data-theme="dark"]) .sun { display: block; }
+	:global([data-theme="dark"]) .moon { display: none; }
+
 	a {
 		color: inherit;
 	}
@@ -86,6 +168,11 @@ const {
 	@media (min-width: 900px) {
 		.page {
 			padding: 72px 64px 96px;
+		}
+		
+		#theme-toggle {
+			top: 32px;
+			right: 32px;
 		}
 	}
 </style>
