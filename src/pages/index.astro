@@ -22,7 +22,7 @@ const categories = linkData?.categories ?? [];
 						<header class="card__header">
 							<span class="dot" style={`--dot:${category.accent ?? '#7cc9ff'}`}></span>
 							<div>
-								<p class="eyebrow">{category.kicker ?? 'Category'}</p>
+								{category.kicker && <p class="eyebrow">{category.kicker}</p>}
 								<h2>{category.name}</h2>
 								{category.description && <p class="muted">{category.description}</p>}
 							</div>

@@ -20,6 +20,7 @@ categories:
         description: "Docs, notes, and checklists"
 
   - name: "Build & ship"
+    kicker: "All-in-one workspace"
     cardWidth: 4
     accent: "#60c4a2"
     description: "Development touchpoints when you're in maker mode."
