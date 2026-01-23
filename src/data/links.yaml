@@ -203,7 +203,6 @@ categories:
 
       - name: "Team Resources"
         cardWidth: 4
-        accent: "#5da8ff"
         links:
           - label: "Design System"
             url: "https://design.example.com/"
@@ -223,3 +222,28 @@ categories:
           - label: "Mixpanel"
             url: "https://mixpanel.com/"
             description: "Product analytics"
+
+  - name: "Quick Links"
+    cardWidth: 4
+    transparent: true
+    description: "A transparent card blends seamlessly with the background."
+    links:
+      - label: "Wikipedia"
+        url: "https://www.wikipedia.org/"
+        description: "Free encyclopedia"
+      - label: "YouTube"
+        url: "https://www.youtube.com/"
+        description: "Video platform"
+
+  - name: "Featured"
+    cardWidth: 4
+    accent: "#ffd700"
+    background: "linear-gradient(135deg, rgba(139, 92, 246, 0.15) 0%, rgba(236, 72, 153, 0.15) 100%)"
+    description: "Custom gradient background for visual emphasis."
+    links:
+      - label: "Featured Project"
+        url: "https://example.com/featured"
+        description: "Highlighted with custom styling"
+      - label: "Special Resource"
+        url: "https://example.com/special"
+        description: "Important reference material"

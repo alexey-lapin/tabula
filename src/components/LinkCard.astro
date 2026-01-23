@@ -11,9 +11,9 @@ const hasLinks = category.links && category.links.length > 0;
 const hasChildren = category.children && category.children.length > 0;
 ---
 
-<article class="card" aria-label={category.name} style={`--card-width: ${category.cardWidth ?? 4}`}>
+<article class:list={["card", { "card--transparent": category.transparent }]} aria-label={category.name} style={`--card-width: ${category.cardWidth ?? 4}${category.background ? `; --card-bg: ${category.background}` : ''}`}>
 	<header class="card__header">
-		<span class="dot" style={`--dot: ${category.accent ?? '#7cc9ff'}`}></span>
+		{category.accent && <span class="dot" style={`--dot: ${category.accent}`}></span>}
 		<div>
 			{category.kicker && <p class="eyebrow">{category.kicker}</p>}
 			<h2>{category.name}</h2>
@@ -42,7 +42,7 @@ const hasChildren = category.children && category.children.length > 0;
 <style>
 	.card {
 		grid-column: span var(--card-width, 4);
-		background: var(--panel);
+		background: var(--card-bg, var(--panel));
 		border: 1px solid var(--border);
 		border-radius: 18px;
 		padding: 18px 18px 14px;
@@ -54,6 +54,18 @@ const hasChildren = category.children && category.children.length > 0;
 	.card:hover {
 		transform: translateY(-2px);
 		border-color: var(--muted);
+	}
+
+	.card--transparent {
+		background: transparent;
+		border: none;
+		box-shadow: none;
+		backdrop-filter: none;
+	}
+
+	.card--transparent:hover {
+		transform: none;
+		border-color: transparent;
 	}
 
 	.card__header {

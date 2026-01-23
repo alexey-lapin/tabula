@@ -18,6 +18,8 @@ export interface Category {
 	cardWidth?: number;
 	links?: Link[];
 	children?: Category[];
+	transparent?: boolean;
+	background?: string;
 }
 
 /**
