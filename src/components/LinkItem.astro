@@ -1,0 +1,59 @@
+---
+import type { Link } from '../types.ts';
+
+interface Props {
+	link: Link;
+}
+
+const { link } = Astro.props;
+---
+
+<li>
+	<a href={link.url} target="_blank" rel="noreferrer noopener">
+		<div class="link__text">
+			<span class="label">{link.label}</span>
+			{link.description && <small>{link.description}</small>}
+		</div>
+		<span class="arrow" aria-hidden="true">↗</span>
+	</a>
+</li>
+
+<style>
+	li + li {
+		border-top: 1px solid var(--border);
+	}
+
+	a {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		gap: 12px;
+		text-decoration: none;
+		padding: 12px 2px;
+		transition: color 0.2s ease, transform 0.2s ease;
+	}
+
+	a:hover {
+		color: var(--text-hover);
+		transform: translateX(2px);
+	}
+
+	.link__text {
+		display: grid;
+		gap: 2px;
+	}
+
+	.label {
+		font-weight: 600;
+	}
+
+	small {
+		color: var(--muted);
+		font-size: 12px;
+	}
+
+	.arrow {
+		font-size: 16px;
+		opacity: 0.7;
+	}
+</style>

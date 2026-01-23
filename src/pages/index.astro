@@ -1,51 +1,24 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import LinkCard from '../components/LinkCard.astro';
+import type { LinkData } from '../types.ts';
 import linkData from '../data/links.yaml';
 
-const hero = linkData?.hero ?? {};
-const categories = linkData?.categories ?? [];
+const data = linkData as LinkData;
+const hero = data?.hero ?? {};
+const categories = data?.categories ?? [];
 ---
 
 <Layout title={`${hero.title ?? 'Home'} | Home`} description={hero.description}>
 	<main class="shell">
-		<section class="intro">
-			<h1>{hero.title ?? 'Personal link launchpad'}</h1>
-			{hero.description && <p class="lede">{hero.description}</p>}
-		</section>
+		<Hero hero={hero} />
 
 		{categories.length === 0 ? (
 			<section class="empty">No categories yet. Add some to src/data/links.yaml.</section>
 		) : (
 			<section class="grid" aria-label="Link categories">
-				{categories.map((category) => (
-					<article class="card" aria-label={category.name} style={`--card-width: ${category.cardWidth ?? 4}`}>
-						<header class="card__header">
-							<span class="dot" style={`--dot:${category.accent ?? '#7cc9ff'}`}></span>
-							<div>
-								{category.kicker && <p class="eyebrow">{category.kicker}</p>}
-								<h2>{category.name}</h2>
-								{category.description && <p class="muted">{category.description}</p>}
-							</div>
-						</header>
-						<ul class="links">
-							{category.links?.length ? (
-								category.links.map((link) => (
-									<li>
-										<a href={link.url} target="_blank" rel="noreferrer noopener">
-											<div class="link__text">
-												<span class="label">{link.label}</span>
-												{link.description && <small>{link.description}</small>}
-											</div>
-											<span class="arrow" aria-hidden="true">↗</span>
-										</a>
-									</li>
-								))
-							) : (
-								<li class="empty">No links yet. Add some to this category.</li>
-							)}
-						</ul>
-					</article>
-				))}
+				{categories.map((category) => <LinkCard category={category} />)}
 			</section>
 		)}
 	</main>
@@ -60,128 +33,10 @@ const categories = linkData?.categories ?? [];
 		gap: 32px;
 	}
 
-	.intro {
-		display: grid;
-		gap: 10px;
-		max-width: 720px;
-	}
-
-	h1 {
-		margin: 0;
-		font-size: clamp(32px, 5vw, 44px);
-		letter-spacing: -0.02em;
-	}
-
-	.lede {
-		margin: 0;
-		color: var(--muted);
-		font-size: 18px;
-		line-height: 1.5;
-	}
-
 	.grid {
 		display: grid;
 		grid-template-columns: repeat(12, 1fr);
 		gap: 18px;
-	}
-
-	.card {
-		grid-column: span var(--card-width, 4);
-		background: var(--panel);
-		border: 1px solid var(--border);
-		border-radius: 18px;
-		padding: 18px 18px 14px;
-		box-shadow: var(--shadow);
-		backdrop-filter: blur(12px);
-		transition: border-color 0.2s ease, transform 0.2s ease;
-	}
-
-	.card:hover {
-		transform: translateY(-2px);
-		border-color: var(--muted);
-	}
-
-	.card__header {
-		display: grid;
-		grid-template-columns: auto 1fr;
-		gap: 12px;
-		align-items: center;
-		margin-bottom: 8px;
-	}
-
-	.dot {
-		width: 16px;
-		height: 16px;
-		border-radius: 50%;
-		background: var(--dot, #7cc9ff);
-		box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.04);
-	}
-
-	.eyebrow {
-		margin: 0;
-		text-transform: uppercase;
-		letter-spacing: 0.12em;
-		font-size: 11px;
-		color: var(--muted);
-	}
-
-	h2 {
-		margin: 4px 0 4px;
-		font-size: 18px;
-		letter-spacing: -0.01em;
-	}
-
-	.muted {
-		margin: 0;
-		color: var(--muted);
-		font-size: 14px;
-		line-height: 1.45;
-	}
-
-	.links {
-		list-style: none;
-		margin: 8px 0 0;
-		padding: 0;
-		display: flex;
-		flex-direction: column;
-	}
-
-	.links li + li {
-		border-top: 1px solid var(--border);
-	}
-
-	.links a {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		gap: 12px;
-		text-decoration: none;
-		padding: 12px 2px;
-		transition: color 0.2s ease, transform 0.2s ease;
-	}
-
-	.links a:hover {
-		color: var(--text-hover);
-		transform: translateX(2px);
-	}
-
-	.link__text {
-		display: grid;
-		gap: 2px;
-	}
-
-	.label {
-		font-weight: 600;
-	}
-
-	small {
-		color: var(--muted);
-		font-size: 12px;
-	}
-
-	.arrow {
-		font-size: 16px;
-		opacity: 0.7;
 	}
 
 	.empty {
@@ -193,11 +48,6 @@ const categories = linkData?.categories ?? [];
 	@media (max-width: 640px) {
 		.shell {
 			gap: 24px;
-		}
-
-		.card {
-			padding: 16px;
-			grid-column: span 12;
 		}
 	}
 </style>

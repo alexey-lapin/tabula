@@ -1,0 +1,105 @@
+---
+import type { Category } from '../types.ts';
+import LinkItem from './LinkItem.astro';
+
+interface Props {
+	category: Category;
+}
+
+const { category } = Astro.props;
+const hasLinks = category.links && category.links.length > 0;
+---
+
+<article class="card" aria-label={category.name} style={`--card-width: ${category.cardWidth ?? 4}`}>
+	<header class="card__header">
+		<span class="dot" style={`--dot: ${category.accent ?? '#7cc9ff'}`}></span>
+		<div>
+			{category.kicker && <p class="eyebrow">{category.kicker}</p>}
+			<h2>{category.name}</h2>
+			{category.description && <p class="muted">{category.description}</p>}
+		</div>
+	</header>
+	<ul class="links">
+		{hasLinks ? (
+			category.links.map((link) => <LinkItem link={link} />)
+		) : (
+			<li class="empty">No links yet. Add some to this category.</li>
+		)}
+	</ul>
+</article>
+
+<style>
+	.card {
+		grid-column: span var(--card-width, 4);
+		background: var(--panel);
+		border: 1px solid var(--border);
+		border-radius: 18px;
+		padding: 18px 18px 14px;
+		box-shadow: var(--shadow);
+		backdrop-filter: blur(12px);
+		transition: border-color 0.2s ease, transform 0.2s ease;
+	}
+
+	.card:hover {
+		transform: translateY(-2px);
+		border-color: var(--muted);
+	}
+
+	.card__header {
+		display: grid;
+		grid-template-columns: auto 1fr;
+		gap: 12px;
+		align-items: center;
+		margin-bottom: 8px;
+	}
+
+	.dot {
+		width: 16px;
+		height: 16px;
+		border-radius: 50%;
+		background: var(--dot, #7cc9ff);
+		box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.04);
+	}
+
+	.eyebrow {
+		margin: 0;
+		text-transform: uppercase;
+		letter-spacing: 0.12em;
+		font-size: 11px;
+		color: var(--muted);
+	}
+
+	h2 {
+		margin: 4px 0 4px;
+		font-size: 18px;
+		letter-spacing: -0.01em;
+	}
+
+	.muted {
+		margin: 0;
+		color: var(--muted);
+		font-size: 14px;
+		line-height: 1.45;
+	}
+
+	.links {
+		list-style: none;
+		margin: 8px 0 0;
+		padding: 0;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.empty {
+		color: var(--muted);
+		font-size: 14px;
+		padding: 8px 2px 6px;
+	}
+
+	@media (max-width: 640px) {
+		.card {
+			padding: 16px;
+			grid-column: span 12;
+		}
+	}
+</style>
