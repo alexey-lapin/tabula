@@ -8,6 +8,7 @@ interface Props {
 
 const { category } = Astro.props;
 const hasLinks = category.links && category.links.length > 0;
+const hasChildren = category.children && category.children.length > 0;
 ---
 
 <article class="card" aria-label={category.name} style={`--card-width: ${category.cardWidth ?? 4}`}>
@@ -19,13 +20,23 @@ const hasLinks = category.links && category.links.length > 0;
 			{category.description && <p class="muted">{category.description}</p>}
 		</div>
 	</header>
-	<ul class="links">
-		{hasLinks ? (
-			category.links.map((link) => <LinkItem link={link} />)
-		) : (
+	{hasLinks && (
+		<ul class="links">
+			{category.links.map((link) => <LinkItem link={link} />)}
+		</ul>
+	)}
+	{hasChildren && (
+		<div class="card__children">
+			{category.children.map((child) => (
+				<Astro.self category={child} />
+			))}
+		</div>
+	)}
+	{!hasLinks && !hasChildren && (
+		<ul class="links">
 			<li class="empty">No links yet. Add some to this category.</li>
-		)}
-	</ul>
+		</ul>
+	)}
 </article>
 
 <style>
@@ -96,10 +107,31 @@ const hasLinks = category.links && category.links.length > 0;
 		padding: 8px 2px 6px;
 	}
 
+	.card__children {
+		display: grid;
+		grid-template-columns: repeat(12, 1fr);
+		gap: 14px;
+		margin-top: 16px;
+		padding-top: 16px;
+		border-top: 1px solid var(--border);
+	}
+
+	.card__children .card {
+		padding: 14px 14px 12px;
+	}
+
 	@media (max-width: 640px) {
 		.card {
 			padding: 16px;
 			grid-column: span 12;
+		}
+
+		.card__children {
+			gap: 12px;
+		}
+
+		.card__children .card {
+			padding: 12px;
 		}
 	}
 </style>

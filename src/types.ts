@@ -17,6 +17,7 @@ export interface Category {
 	accent?: string;
 	cardWidth?: number;
 	links?: Link[];
+	children?: Category[];
 }
 
 /**

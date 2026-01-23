@@ -11,7 +11,6 @@ categories:
     links:
       - label: "Inbox"
         url: "https://mail.google.com/"
-#        description: "Gmail, ready for triage"
       - label: "Calendar"
         url: "https://calendar.google.com/"
         description: "Schedule and join meetings"
@@ -139,3 +138,88 @@ categories:
       - label: "Product Hunt"
         url: "https://www.producthunt.com/"
         description: "Discover new products daily"
+
+  - name: "Work Hub"
+    kicker: "Nested example"
+    cardWidth: 12
+    accent: "#ff7eb9"
+    description: "A nested card with both direct links and organized subsections."
+    links:
+      - label: "Company Portal"
+        url: "https://portal.example.com/"
+        description: "Main company dashboard"
+      - label: "Team Wiki"
+        url: "https://wiki.example.com/"
+        description: "Internal documentation"
+    children:
+      - name: "Active Projects"
+        cardWidth: 4
+        accent: "#60c4a2"
+        links:
+          - label: "Project Alpha"
+            url: "https://alpha.example.com/"
+            description: "Q1 priority project"
+          - label: "Project Beta"
+            url: "https://beta.example.com/"
+            description: "Customer dashboard redesign"
+
+      - name: "Team Resources"
+        cardWidth: 4
+        accent: "#5da8ff"
+        links:
+          - label: "Design System"
+            url: "https://design.example.com/"
+            description: "Component library and guidelines"
+          - label: "API Docs"
+            url: "https://api.example.com/"
+            description: "Internal API reference"
+
+      - name: "Analytics"
+        cardWidth: 4
+        accent: "#ffb347"
+        description: "Track performance and user metrics."
+        links:
+          - label: "Google Analytics"
+            url: "https://analytics.google.com/"
+            description: "Website traffic and behavior"
+          - label: "Mixpanel"
+            url: "https://mixpanel.com/"
+            description: "Product analytics"
+
+  - name: "Work Hub"
+    cardWidth: 8
+    description: "A nested card with both direct links and organized subsections."
+    children:
+      - name: "Active Projects"
+        cardWidth: 4
+        accent: "#60c4a2"
+        links:
+          - label: "Project Alpha"
+            url: "https://alpha.example.com/"
+            description: "Q1 priority project"
+          - label: "Project Beta"
+            url: "https://beta.example.com/"
+            description: "Customer dashboard redesign"
+
+      - name: "Team Resources"
+        cardWidth: 4
+        accent: "#5da8ff"
+        links:
+          - label: "Design System"
+            url: "https://design.example.com/"
+            description: "Component library and guidelines"
+          - label: "API Docs"
+            url: "https://api.example.com/"
+            description: "Internal API reference"
+
+      - name: "Analytics"
+        cardWidth: 4
+        accent: "#ffb347"
+        description: "Track performance and user metrics."
+        links:
+          - label: "Google Analytics"
+            url: "https://analytics.google.com/"
+            description: "Website traffic and behavior"
+          - label: "Mixpanel"
+            url: "https://mixpanel.com/"
+            description: "Product analytics"
