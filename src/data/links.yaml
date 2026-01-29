@@ -247,3 +247,8 @@ categories:
       - label: "Special Resource"
         url: "https://example.com/special"
         description: "Important reference material"
+
+  - name: "Empty"
+    cardWidth: 4
+    description: "Just an empty card to show handling of no links or children."
+
