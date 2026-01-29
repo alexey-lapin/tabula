@@ -10,20 +10,29 @@ interface Props {
 const { category, parentVars } = Astro.props;
 const links = category.links ?? [];
 const children = category.children ?? [];
+const label = category.name?.trim() ?? '';
+const hasHeaderContent = Boolean(label || category.kicker || category.description || category.accent);
 const hasLinks = links.length > 0;
 const hasChildren = children.length > 0;
+const showEmpty = !hasLinks && !hasChildren && hasHeaderContent;
 const mergedVars = { ...(parentVars ?? {}), ...(category.vars ?? {}) };
 ---
 
-<article class:list={["card", { "card--transparent": category.transparent }]} aria-label={category.name} style={`--card-width: ${category.cardWidth ?? 4}${category.background ? `; --card-bg: ${category.background}` : ''}`}>
-	<header class="card__header">
-		{category.accent && <span class="dot" style={`--dot: ${category.accent}`}></span>}
-		<div>
-			{category.kicker && <p class="eyebrow">{category.kicker}</p>}
-			<h2>{category.name}</h2>
-			{category.description && <p class="muted">{category.description}</p>}
-		</div>
-	</header>
+<article
+	class:list={["card", { "card--transparent": category.transparent }]}
+	aria-label={label ? label : undefined}
+	style={`--card-width: ${category.cardWidth ?? 4}${category.background ? `; --card-bg: ${category.background}` : ''}`}
+>
+	{hasHeaderContent && (
+		<header class="card__header">
+			{category.accent && <span class="dot" style={`--dot: ${category.accent}`}></span>}
+			<div>
+				{category.kicker && <p class="eyebrow">{category.kicker}</p>}
+				{label && <h2>{label}</h2>}
+				{category.description && <p class="muted">{category.description}</p>}
+			</div>
+		</header>
+	)}
 	{hasLinks && (
 		<ul class="links">
 			{links.map((link) => <LinkItem link={link} vars={mergedVars} />)}
@@ -36,7 +45,7 @@ const mergedVars = { ...(parentVars ?? {}), ...(category.vars ?? {}) };
 			))}
 		</div>
 	)}
-	{!hasLinks && !hasChildren && (
+	{showEmpty && (
 		<ul class="links">
 			<li class="empty">No links yet. Add some to this category.</li>
 		</ul>

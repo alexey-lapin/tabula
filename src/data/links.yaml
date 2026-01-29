@@ -269,6 +269,8 @@ categories:
             url: "{{base}}/teams/{{team}}/metrics"
             description: "Overrides team var"
 
+  - cardWidth: 5
+
   - name: "Empty"
     cardWidth: 4
     description: "Just an empty card to show handling of no links or children."

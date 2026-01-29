@@ -11,7 +11,7 @@ export interface Link {
  * Represents a category of links displayed as a card
  */
 export interface Category {
-	name: string;
+	name?: string;
 	kicker?: string;
 	description?: string;
 	accent?: string;
