@@ -15,7 +15,7 @@ export interface Category {
 	kicker?: string;
 	description?: string;
 	accent?: string;
-	cardWidth?: number;
+	cols?: number;
 	links?: Link[];
 	children?: Category[];
 	transparent?: boolean;

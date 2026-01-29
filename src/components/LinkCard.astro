@@ -21,7 +21,7 @@ const mergedVars = { ...(parentVars ?? {}), ...(category.vars ?? {}) };
 <article
 	class:list={["card", { "card--transparent": category.transparent }]}
 	aria-label={label ? label : undefined}
-	style={`--card-width: ${category.cardWidth ?? 4}${category.background ? `; --card-bg: ${category.background}` : ''}`}
+	style={`--card-width: ${category.cols ?? 4}${category.background ? `; --card-bg: ${category.background}` : ''}`}
 >
 	{hasHeaderContent && (
 		<header class="card__header">

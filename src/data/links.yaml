@@ -5,7 +5,7 @@ hero:
 
 categories:
   - name: "Daily ops"
-    cardWidth: 4
+    cols: 4
     accent: "#8f7bff"
     description: "Keep comms, notes, and the calendar within one hop."
     links:
@@ -20,7 +20,7 @@ categories:
 
   - name: "Build & ship"
     kicker: "All-in-one workspace"
-    cardWidth: 4
+    cols: 4
     accent: "#60c4a2"
     description: "Development touchpoints when you're in maker mode."
     links:
@@ -35,7 +35,7 @@ categories:
         description: "Find answers and snippets"
 
   - name: "Learning"
-    cardWidth: 4
+    cols: 4
     accent: "#ffb347"
     description: "Sharpen skills with tutorials, patterns, and examples."
     links:
@@ -50,7 +50,7 @@ categories:
         description: "Motion and animation ideas"
 
   - name: "Reference"
-    cardWidth: 6
+    cols: 6
     accent: "#5da8ff"
     description: "Utilities and lookups you reach for often."
     links:
@@ -65,7 +65,7 @@ categories:
         description: "Curated color palettes"
 
   - name: "Design & Assets"
-    cardWidth: 4
+    cols: 4
     accent: "#ff6eb3"
     description: "Icons, fonts, and inspiration for visual work."
     links:
@@ -80,7 +80,7 @@ categories:
         description: "Beautiful open-source icons"
 
   - name: "Productivity"
-    cardWidth: 4
+    cols: 4
     accent: "#7ed6df"
     description: "Tools to organize, track, and ship work."
     links:
@@ -95,7 +95,7 @@ categories:
         description: "Make writing clear and bold"
 
   - name: "Cloud & Deploy"
-    cardWidth: 4
+    cols: 4
     accent: "#ffa07a"
     description: "Hosting, monitoring, and infrastructure."
     links:
@@ -110,7 +110,7 @@ categories:
         description: "Open-source Firebase alternative"
 
   - name: "AI & APIs"
-    cardWidth: 6
+    cols: 6
     accent: "#d4a5ff"
     description: "Build with AI models and data services."
     links:
@@ -125,7 +125,7 @@ categories:
         description: "Run AI models via API"
 
   - name: "News & Community"
-    cardWidth: 6
+    cols: 6
     accent: "#ffda79"
     description: "Stay current with tech trends and discussions."
     links:
@@ -141,7 +141,7 @@ categories:
 
   - name: "Work Hub"
     kicker: "Nested example"
-    cardWidth: 12
+    cols: 12
     accent: "#ff7eb9"
     description: "A nested card with both direct links and organized subsections."
     links:
@@ -153,7 +153,7 @@ categories:
         description: "Internal documentation"
     children:
       - name: "Active Projects"
-        cardWidth: 4
+        cols: 4
         accent: "#60c4a2"
         links:
           - label: "Project Alpha"
@@ -164,7 +164,7 @@ categories:
             description: "Customer dashboard redesign"
 
       - name: "Team Resources"
-        cardWidth: 4
+        cols: 4
         accent: "#5da8ff"
         links:
           - label: "Design System"
@@ -175,7 +175,7 @@ categories:
             description: "Internal API reference"
 
       - name: "Analytics"
-        cardWidth: 4
+        cols: 4
         accent: "#ffb347"
         description: "Track performance and user metrics."
         links:
@@ -187,11 +187,11 @@ categories:
             description: "Product analytics"
 
   - name: "Work Hub"
-    cardWidth: 8
+    cols: 8
     description: "A nested card with both direct links and organized subsections."
     children:
       - name: "Active Projects"
-        cardWidth: 4
+        cols: 4
         accent: "#60c4a2"
         links:
           - label: "Project Alpha"
@@ -202,7 +202,7 @@ categories:
             description: "Customer dashboard redesign"
 
       - name: "Team Resources"
-        cardWidth: 4
+        cols: 4
         links:
           - label: "Design System"
             url: "https://design.example.com/"
@@ -212,7 +212,7 @@ categories:
             description: "Internal API reference"
 
       - name: "Analytics"
-        cardWidth: 4
+        cols: 4
         accent: "#ffb347"
         description: "Track performance and user metrics."
         links:
@@ -224,7 +224,7 @@ categories:
             description: "Product analytics"
 
   - name: "Quick Links"
-    cardWidth: 4
+    cols: 4
     transparent: true
     description: "A transparent card blends seamlessly with the background."
     links:
@@ -236,7 +236,7 @@ categories:
         description: "Video platform"
 
   - name: "Featured"
-    cardWidth: 4
+    cols: 4
     accent: "#ffd700"
     background: "linear-gradient(135deg, rgba(139, 92, 246, 0.15) 0%, rgba(236, 72, 153, 0.15) 100%)"
     description: "Custom gradient background for visual emphasis."
@@ -249,7 +249,7 @@ categories:
         description: "Important reference material"
 
   - name: "Vars Example"
-    cardWidth: 6
+    cols: 6
     accent: "#7ed6df"
     description: "Card-level vars resolve inside link URLs."
     vars:
@@ -261,7 +261,7 @@ categories:
         description: "Uses card vars"
     children:
       - name: "Analytics"
-        cardWidth: 6
+        cols: 6
         vars:
           team: "beta"
         links:
@@ -269,8 +269,8 @@ categories:
             url: "{{base}}/teams/{{team}}/metrics"
             description: "Overrides team var"
 
-  - cardWidth: 5
+  - cols: 5
 
   - name: "Empty"
-    cardWidth: 4
+    cols: 4
     description: "Just an empty card to show handling of no links or children."

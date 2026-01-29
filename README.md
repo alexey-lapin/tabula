@@ -33,7 +33,7 @@ All commands are run from the root of the project:
 Edit `src/data/links.yaml` to add your own categories and links. Each category supports:
 
 - `name` - Category title
-- `cardWidth` - Grid width (4, 6, 8, or 12)
+- `cols` - Grid width (4, 6, 8, or 12)
 - `accent` - Accent color (hex code)
 - `description` - Short description
 - `links` - Array of links with label, url, and description
