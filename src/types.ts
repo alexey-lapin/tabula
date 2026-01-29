@@ -20,6 +20,7 @@ export interface Category {
 	children?: Category[];
 	transparent?: boolean;
 	background?: string;
+	vars?: Record<string, string | number>;
 }
 
 /**

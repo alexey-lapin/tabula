@@ -3,13 +3,18 @@ import type { Link } from '../types.ts';
 
 interface Props {
 	link: Link;
+	vars?: Record<string, string | number>;
 }
 
-const { link } = Astro.props;
+const { link, vars = {} } = Astro.props;
+const resolvedUrl = link.url.replace(/\{\{\s*([A-Za-z0-9_-]+)\s*\}\}/g, (match, key) => {
+	const value = vars[key];
+	return value === undefined ? match : String(value);
+});
 ---
 
 <li>
-	<a href={link.url} target="_blank" rel="noreferrer noopener">
+	<a href={resolvedUrl} target="_blank" rel="noreferrer noopener">
 		<div class="link__text">
 			<span class="label">{link.label}</span>
 			{link.description && <small>{link.description}</small>}

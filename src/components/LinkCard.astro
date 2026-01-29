@@ -4,11 +4,15 @@ import LinkItem from './LinkItem.astro';
 
 interface Props {
 	category: Category;
+	parentVars?: Record<string, string | number>;
 }
 
-const { category } = Astro.props;
-const hasLinks = category.links && category.links.length > 0;
-const hasChildren = category.children && category.children.length > 0;
+const { category, parentVars } = Astro.props;
+const links = category.links ?? [];
+const children = category.children ?? [];
+const hasLinks = links.length > 0;
+const hasChildren = children.length > 0;
+const mergedVars = { ...(parentVars ?? {}), ...(category.vars ?? {}) };
 ---
 
 <article class:list={["card", { "card--transparent": category.transparent }]} aria-label={category.name} style={`--card-width: ${category.cardWidth ?? 4}${category.background ? `; --card-bg: ${category.background}` : ''}`}>
@@ -22,13 +26,13 @@ const hasChildren = category.children && category.children.length > 0;
 	</header>
 	{hasLinks && (
 		<ul class="links">
-			{category.links.map((link) => <LinkItem link={link} />)}
+			{links.map((link) => <LinkItem link={link} vars={mergedVars} />)}
 		</ul>
 	)}
 	{hasChildren && (
 		<div class="card__children">
-			{category.children.map((child) => (
-				<Astro.self category={child} />
+			{children.map((child) => (
+				<Astro.self category={child} parentVars={mergedVars} />
 			))}
 		</div>
 	)}

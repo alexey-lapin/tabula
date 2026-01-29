@@ -248,7 +248,27 @@ categories:
         url: "https://example.com/special"
         description: "Important reference material"
 
+  - name: "Vars Example"
+    cardWidth: 6
+    accent: "#7ed6df"
+    description: "Card-level vars resolve inside link URLs."
+    vars:
+      base: "https://portal.example.com"
+      team: "alpha"
+    links:
+      - label: "Team Overview"
+        url: "{{base}}/teams/{{team}}"
+        description: "Uses card vars"
+    children:
+      - name: "Analytics"
+        cardWidth: 6
+        vars:
+          team: "beta"
+        links:
+          - label: "Metrics"
+            url: "{{base}}/teams/{{team}}/metrics"
+            description: "Overrides team var"
+
   - name: "Empty"
     cardWidth: 4
     description: "Just an empty card to show handling of no links or children."
-
