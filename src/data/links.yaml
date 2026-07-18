@@ -248,6 +248,42 @@ categories:
         url: "https://example.com/special"
         description: "Important reference material"
 
+  - name: "Highlights"
+    cols: 4
+    accent: "#22d3ee"
+    background: "linear-gradient(135deg, rgba(34, 211, 238, 0.18) 0%, rgba(59, 130, 246, 0.18) 100%)"
+    description: "A card with an ocean gradient background."
+    links:
+      - label: "Trending"
+        url: "https://example.com/trending"
+        description: "What's popular right now"
+      - label: "Editor's Pick"
+        url: "https://example.com/pick"
+        description: "Hand-selected highlight"
+    children:
+      - name: "This Week"
+        cols: 12
+        accent: "#38bdf8"
+        description: "Fresh picks updated every Monday."
+        links:
+          - label: "New Releases"
+            url: "https://example.com/new"
+            description: "Latest additions"
+          - label: "Rising"
+            url: "https://example.com/rising"
+            description: "Gaining momentum fast"
+      - name: "Staff Favorites"
+        cols: 12
+        accent: "#818cf8"
+        description: "Hand-curated by the team."
+        links:
+          - label: "Deep Dives"
+            url: "https://example.com/deep-dives"
+            description: "Long-form standouts"
+          - label: "Hidden Gems"
+            url: "https://example.com/gems"
+            description: "Underrated finds"
+
   - name: "Vars Example"
     cols: 6
     accent: "#7ed6df"
