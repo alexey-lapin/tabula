@@ -2,7 +2,7 @@
 // Copies the real Tabula project files from the repo root into ./template so
 // they ship bundled inside the published create-tabula package. Runs on demand
 // (`npm run sync`) and automatically before publish (`prepack`).
-import { cp, rm, mkdir, writeFile } from 'node:fs/promises';
+import { cp, rm, mkdir, writeFile, readFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve, join } from 'node:path';
 
@@ -13,6 +13,18 @@ const templateDir = join(pkgRoot, 'template');
 
 // Files/dirs that make up a fresh Tabula project.
 const include = ['src', 'astro.config.mjs', 'tsconfig.json', 'package.json'];
+
+// Tabula and create-tabula are released in lockstep: create-tabula's version is
+// what `upgrade` stamps into a project and reports as its from → to, so a drift
+// would label a project with a version the repo never had.
+const version = async (dir) => JSON.parse(await readFile(join(dir, 'package.json'), 'utf8')).version;
+const [appVersion, pkgVersion] = await Promise.all([version(repoRoot), version(pkgRoot)]);
+
+if (appVersion !== pkgVersion) {
+	console.error(`✖ Version drift: tabula is ${appVersion}, create-tabula is ${pkgVersion}.`);
+	console.error('  These are released together — set both to the version you are publishing.');
+	process.exit(1);
+}
 
 // npm refuses to publish a file literally named `.gitignore`, so it is shipped
 // as `gitignore` and renamed back to `.gitignore` when the project is scaffolded.
