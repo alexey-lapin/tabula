@@ -3,6 +3,26 @@ hero:
   title: "A calm start page"
   description: "Quick, categorized shortcuts for the places you visit most."
 
+# Reusable variant definitions. A card or link selects from these by name via
+# `variants`, and renders one chip per selected variant instead of a single
+# clickable row, with each variant's vars substituted into the url template.
+variantDefs:
+  dev:
+    color: "#60c4a2"
+    vars:
+      env: "dev"
+      branch: "develop"
+  uat:
+    color: "#ffb347"
+    vars:
+      env: "uat"
+      branch: "release"
+  prd:
+    color: "#ff6b6b"
+    vars:
+      env: "prod"
+      branch: "main"
+
 categories:
   - name: "Daily ops"
     cols: 4
@@ -304,6 +324,53 @@ categories:
           - label: "Metrics"
             url: "{{base}}/teams/{{team}}/metrics"
             description: "Overrides team var"
+
+  - name: "Swagger UI"
+    cols: 6
+    accent: "#5da8ff"
+    description: "One row per service, one chip per environment."
+    variants: [dev, uat, prd]
+    links:
+      - label: "Orders API"
+        url: "https://orders.{{env}}.example.com/swagger-ui"
+      - label: "Billing API"
+        url: "https://billing.{{env}}.example.com/swagger-ui"
+        description: "No UAT deployment"
+        variants: [dev, prd]
+      - label: "Swagger Aggregator"
+        url: "https://swagger.example.com/"
+        description: "Not per-environment — a plain link on a variant card"
+        variants: []
+      - label: "Legacy API"
+        variants:
+          - ref: dev
+            url: "https://legacy-dev.example.com/swagger"
+          - ref: prd
+            url: "https://legacy.example.com/swagger"
+          - label: "v1"
+            color: "#9fb2d8"
+            url: "https://legacy.example.com/v1/swagger"
+
+  - name: "Pipelines"
+    cols: 6
+    accent: "#d4a5ff"
+    description: "Card-level variant overrides and vars in the same url."
+    variantDefs:
+      dev:
+        vars:
+          branch: "devel"
+    variants: [dev, prd]
+    links:
+      - label: "Build"
+        url: "https://ci.example.com/{{env}}/tree/{{branch}}"
+      - label: "Deploy"
+        url: "https://ci.example.com/deploy/{{env}}"
+    children:
+      - name: "Dashboards"
+        cols: 12
+        links:
+          - label: "Grafana"
+            url: "https://grafana.example.com/d/{{env}}"
 
   - cols: 5
 

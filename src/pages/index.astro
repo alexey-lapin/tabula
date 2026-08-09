@@ -8,6 +8,7 @@ import linkData from '../data/links.yaml';
 const data = linkData as LinkData;
 const hero = data?.hero ?? {};
 const categories = data?.categories ?? [];
+const variantDefs = data?.variantDefs ?? {};
 ---
 
 <Layout title={`${hero.title ?? 'Home'} | Home`} description={hero.description}>
@@ -18,7 +19,9 @@ const categories = data?.categories ?? [];
 			<section class="empty">No categories yet. Add some to src/data/links.yaml.</section>
 		) : (
 			<section class="grid" aria-label="Link categories">
-				{categories.map((category) => <LinkCard category={category} />)}
+				{categories.map((category) => (
+					<LinkCard category={category} parentVariantDefs={variantDefs} />
+				))}
 			</section>
 		)}
 	</main>

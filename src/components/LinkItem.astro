@@ -1,27 +1,55 @@
 ---
-import type { Link } from '../types.ts';
+import type { Link, VariantDef, VariantRef, Vars } from '../types.ts';
+import { interpolate, resolveVariants } from '../variants.ts';
 
 interface Props {
 	link: Link;
-	vars?: Record<string, string | number>;
+	vars?: Vars;
+	variantDefs?: Record<string, VariantDef>;
+	cardVariants?: VariantRef[];
 }
 
-const { link, vars = {} } = Astro.props;
-const resolvedUrl = link.url.replace(/\{\{\s*([A-Za-z0-9_-]+)\s*\}\}/g, (match, key) => {
-	const value = vars[key];
-	return value === undefined ? match : String(value);
-});
+const { link, vars = {}, variantDefs = {}, cardVariants } = Astro.props;
+const variants = resolveVariants(link, variantDefs, cardVariants, vars);
+
+if (variants.length === 0 && !link.url) {
+	throw new Error(`Link "${link.label}" has neither a url nor any variants`);
+}
+
+const resolvedUrl = link.url ? interpolate(link.url, vars) : '';
 ---
 
-<li>
-	<a href={resolvedUrl} target="_blank" rel="noreferrer noopener">
+{variants.length > 0 ? (
+	<li class="variant-row">
 		<div class="link__text">
 			<span class="label">{link.label}</span>
 			{link.description && <small>{link.description}</small>}
 		</div>
-		<span class="arrow" aria-hidden="true">↗</span>
-	</a>
-</li>
+		<div class="chips">
+			{variants.map((variant) => (
+				<a
+					class="chip"
+					href={variant.url}
+					target="_blank"
+					rel="noreferrer noopener"
+					aria-label={`${link.label} — ${variant.label}`}
+					title={variant.title}
+					style={variant.color ? `--chip: ${variant.color}` : undefined}
+				>{variant.label}</a>
+			))}
+		</div>
+	</li>
+) : (
+	<li>
+		<a href={resolvedUrl} target="_blank" rel="noreferrer noopener">
+			<div class="link__text">
+				<span class="label">{link.label}</span>
+				{link.description && <small>{link.description}</small>}
+			</div>
+			<span class="arrow" aria-hidden="true">↗</span>
+		</a>
+	</li>
+)}
 
 <style>
 	li + li {
@@ -65,5 +93,62 @@ const resolvedUrl = link.url.replace(/\{\{\s*([A-Za-z0-9_-]+)\s*\}\}/g, (match, 
 	.arrow {
 		font-size: 16px;
 		opacity: 0.7;
+	}
+
+	.variant-row {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		gap: 12px;
+		padding: 12px 2px;
+	}
+
+	.chips {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: flex-end;
+		gap: 6px;
+	}
+
+	/* Chips are their own links, so they opt out of the row-level anchor styles */
+	.chip {
+		--chip-color: var(--chip, var(--card-accent, var(--muted)));
+		display: inline-block;
+		padding: 3px 8px;
+		border-radius: 6px;
+		font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+		font-size: 11px;
+		line-height: 1.4;
+		letter-spacing: 0.02em;
+		white-space: nowrap;
+		color: color-mix(in srgb, var(--chip-color) 70%, var(--text));
+		background: color-mix(in srgb, var(--chip-color) 14%, transparent);
+		border: 1px solid color-mix(in srgb, var(--chip-color) 38%, transparent);
+		transition: background-color 0.2s ease, border-color 0.2s ease;
+	}
+
+	/* Outranks the `a:visited { color: inherit }` above, which would otherwise
+	   strip the tint from any chip you have already opened */
+	.chip:visited {
+		color: color-mix(in srgb, var(--chip-color) 70%, var(--text));
+	}
+
+	.chip:hover {
+		transform: none;
+		color: color-mix(in srgb, var(--chip-color) 45%, var(--text-hover));
+		background: color-mix(in srgb, var(--chip-color) 26%, transparent);
+		border-color: color-mix(in srgb, var(--chip-color) 60%, transparent);
+	}
+
+	@media (max-width: 640px) {
+		.variant-row {
+			flex-direction: column;
+			align-items: stretch;
+			gap: 8px;
+		}
+
+		.chips {
+			justify-content: flex-start;
+		}
 	}
 </style>
