@@ -1,13 +1,16 @@
 ---
-import type { Category } from '../types.ts';
+import type { Category, VariantDef, VariantRef, Vars } from '../types.ts';
+import { mergeVariantDefs } from '../variants.ts';
 import LinkItem from './LinkItem.astro';
 
 interface Props {
 	category: Category;
-	parentVars?: Record<string, string | number>;
+	parentVars?: Vars;
+	parentVariantDefs?: Record<string, VariantDef>;
+	parentVariants?: VariantRef[];
 }
 
-const { category, parentVars } = Astro.props;
+const { category, parentVars, parentVariantDefs, parentVariants } = Astro.props;
 const links = category.links ?? [];
 const children = category.children ?? [];
 const label = category.name?.trim() ?? '';
@@ -16,12 +19,14 @@ const hasLinks = links.length > 0;
 const hasChildren = children.length > 0;
 const showEmpty = !hasLinks && !hasChildren && hasHeaderContent;
 const mergedVars = { ...(parentVars ?? {}), ...(category.vars ?? {}) };
+const variantDefs = mergeVariantDefs(parentVariantDefs ?? {}, category.variantDefs);
+const variants = category.variants ?? parentVariants;
 ---
 
 <article
 	class:list={["card", { "card--transparent": category.transparent }]}
 	aria-label={label ? label : undefined}
-	style={`--card-width: ${category.cols ?? 4}${category.background ? `; --card-bg: ${category.background}` : ''}`}
+	style={`--card-width: ${category.cols ?? 4}${category.background ? `; --card-bg: ${category.background}` : ''}${category.accent ? `; --card-accent: ${category.accent}` : ''}`}
 >
 	{hasHeaderContent && (
 		<header class="card__header">
@@ -35,13 +40,25 @@ const mergedVars = { ...(parentVars ?? {}), ...(category.vars ?? {}) };
 	)}
 	{hasLinks && (
 		<ul class="links">
-			{links.map((link) => <LinkItem link={link} vars={mergedVars} />)}
+			{links.map((link) => (
+				<LinkItem
+					link={link}
+					vars={mergedVars}
+					variantDefs={variantDefs}
+					cardVariants={variants}
+				/>
+			))}
 		</ul>
 	)}
 	{hasChildren && (
 		<div class="card__children">
 			{children.map((child) => (
-				<Astro.self category={child} parentVars={mergedVars} />
+				<Astro.self
+					category={child}
+					parentVars={mergedVars}
+					parentVariantDefs={variantDefs}
+					parentVariants={variants}
+				/>
 			))}
 		</div>
 	)}
