@@ -11,7 +11,7 @@ const categories = data?.categories ?? [];
 const variantDefs = data?.variantDefs ?? {};
 ---
 
-<Layout title={`${hero.title ?? 'Home'} | Home`} description={hero.description}>
+<Layout title={hero.title} description={hero.description}>
 	<main class="shell">
 		<Hero hero={hero} />
 
