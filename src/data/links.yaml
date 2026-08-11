@@ -205,9 +205,9 @@ categories:
             url: "https://mixpanel.com/"
             description: "Product analytics"
 
-  - name: "Work Hub"
+  - name: "Subsections Only"
     cols: 8
-    description: "A nested card with both direct links and organized subsections."
+    description: "A nested card with no direct links of its own — just subsections."
     children:
       - name: "Active Projects"
         cols: 4
@@ -370,8 +370,6 @@ categories:
         links:
           - label: "Grafana"
             url: "https://grafana.example.com/d/{{env}}"
-
-  - cols: 5
 
   - name: "Empty"
     cols: 4
