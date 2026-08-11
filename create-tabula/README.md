@@ -34,11 +34,10 @@ The version being applied is printed, along with the version you came from
 (recorded as `tabula` in your `package.json`).
 
 Your `src/data/links.yaml` is never touched. Everything else Tabula ships is
-replaced: `src/components/`, `src/layouts/`, and `src/assets/` are replaced
-wholesale so renamed files don't linger, while `src/pages/index.astro`,
-`src/types.ts`, `src/variants.ts`, `astro.config.mjs`, and `tsconfig.json` are
-overwritten individually — `src/pages/` is left otherwise intact so your own
-routes survive. `package.json` keeps your name and version while taking
+replaced: `src/components/` and `src/layouts/` wholesale, so renamed files don't
+linger, while `src/pages/index.astro`, `src/types.ts`, `src/variants.ts`,
+`astro.config.mjs`, and `tsconfig.json` are overwritten individually —
+`src/pages/` is left otherwise intact so your own routes survive. `package.json` keeps your name and version while taking
 Tabula's dependencies and scripts, so run `npm install` afterwards.
 
 Because the replacement is wholesale, a component of your own inside
