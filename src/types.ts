@@ -66,7 +66,6 @@ export interface Category {
  * Hero section configuration
  */
 export interface Hero {
-	kicker?: string;
 	title?: string;
 	description?: string;
 }
